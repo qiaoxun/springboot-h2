@@ -6,6 +6,11 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
+import org.springframework.scheduling.support.CronTrigger;
+
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
 
 /**
  * Plain JDBC project
@@ -22,12 +27,9 @@ public class SpringbootH2Application {
 
 	@Bean
 	CommandLineRunner commandLineRunner(StudentRepository repository) {
-		return new CommandLineRunner() {
-			@Override
-			public void run(String... args) throws Exception {
-				Student student = repository.getById(10001L);
-				System.out.println(student);
-			}
+		return args -> {
+			Student student = repository.getById(10001L);
+			System.out.println(student);
 		};
 	}
 
